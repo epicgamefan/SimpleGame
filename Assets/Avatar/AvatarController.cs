@@ -9,6 +9,8 @@ public class AvatarController : MonoBehaviour
     public float moveSpeed = 1f;
     Vector2 moveDirection = Vector2.zero;
 
+    Animator animator;
+
     private void OnEnable()
     {
         playerControls.Enable();
@@ -22,13 +24,16 @@ public class AvatarController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         moveDirection = playerControls.ReadValue<Vector2>();
+        animator.SetBool("Walk", moveDirection != Vector2.zero);
+        animator.SetFloat("DirectionX", moveDirection.x);
+        animator.SetFloat("DirectionY", moveDirection.y);
     }
 
     private void FixedUpdate()
